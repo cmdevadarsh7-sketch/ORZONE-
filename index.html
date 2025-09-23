@@ -12,17 +12,15 @@
 <body class="flex flex-col items-center p-8 md:p-12">
 
     <header class="w-full max-w-7xl text-center mb-8 md:mb-12">
-    <h1 class="text-6xl md:text-8xl font-bold tracking-tight text-white mb-4">orZONE</h1>
-    <p class="text-xl md:text-2xl font-light">
-        We will deliver that in 5 hours.
-    </p>
-    <div class="relative w-full max-w-md mx-auto mt-6">
-        <input type="text" id="searchInput" placeholder="Search for products..." class="w-full py-3 pl-5 pr-12 rounded-full bg-white text-black placeholder-gray-500 shadow-md focus:outline-none focus:ring-2 focus:ring-red-600 transition-all">
-        <svg xmlns="http://www.w3.org/2000/svg" class="absolute right-4 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-    </div>
-</header>
+        <h1 class="text-6xl md:text-8xl font-bold tracking-tight text-white mb-4">orZONE</h1>
+        <p class="text-xl md:text-2xl font-light mb-6">
+            We will deliver that in 5 hours.
+        </p>
+        <div class="relative w-full max-w-md mx-auto">
+            <input type="text" id="searchInput" placeholder="Search for products..." class="w-full py-3 px-5 rounded-full bg-green-500 text-white placeholder-white shadow-md focus:outline-none focus:ring-2 focus:ring-green-400 transition-all">
+            <div id="searchResults" class="search-results-container hidden"></div>
+        </div>
+    </header>
 
     <main id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
 
@@ -35,8 +33,7 @@
                 <span class="text-sm text-green-600 font-semibold">50% Offer!</span>
             </div>
             <div class="flex flex-col space-y-3 w-full mt-auto">
-                <a href="https://wa.me/?text=I%20am%20interested%20in%20product%20%23ORZ101." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
-                <button data-code="ORZ101" class="inquiry-btn w-full text-center py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300 text-black font-medium transition-colors">Add to Inquiry List</button>
+                <a href="https://wa.me/919400959572?text=I%20am%20interested%20in%20product%20%23ORZ101." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
             </div>
         </div>
 
@@ -49,8 +46,7 @@
                 <span class="text-sm text-green-600 font-semibold">30% Offer!</span>
             </div>
             <div class="flex flex-col space-y-3 w-full mt-auto">
-                <a href="https://wa.me/?text=I%20am%20interested%20in%20product%20%23ORZ102." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
-                <button data-code="ORZ102" class="inquiry-btn w-full text-center py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300 text-black font-medium transition-colors">Add to Inquiry List</button>
+                <a href="https://wa.me/919400959572?text=I%20am%20interested%20in%20product%20%23ORZ102." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
             </div>
         </div>
 
@@ -63,8 +59,7 @@
                 <span class="text-sm text-green-600 font-semibold">Special Offer!</span>
             </div>
             <div class="flex flex-col space-y-3 w-full mt-auto">
-                <a href="https://wa.me/?text=I%20am%20interested%20in%20product%20%23ORZ103." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
-                <button data-code="ORZ103" class="inquiry-btn w-full text-center py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300 text-black font-medium transition-colors">Add to Inquiry List</button>
+                <a href="https://wa.me/919400959572?text=I%20am%20interested%20in%20product%20%23ORZ103." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
             </div>
         </div>
         
@@ -77,8 +72,7 @@
                 <span class="text-sm text-green-600 font-semibold">10% Offer!</span>
             </div>
             <div class="flex flex-col space-y-3 w-full mt-auto">
-                <a href="https://wa.me/?text=I%20am%20interested%20in%20product%20%23ORZ104." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
-                <button data-code="ORZ104" class="inquiry-btn w-full text-center py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300 text-black font-medium transition-colors">Add to Inquiry List</button>
+                <a href="https://wa.me/919400959572?text=I%20am%20interested%20in%20product%20%23ORZ104." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
             </div>
         </div>
 
@@ -91,20 +85,19 @@
                 <span class="text-sm text-green-600 font-semibold">Special Offer!</span>
             </div>
             <div class="flex flex-col space-y-3 w-full mt-auto">
-                <a href="https://wa.me/?text=I%20am%20interested%20in%20product%20%23ORZ105." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
-                <button data-code="ORZ105" class="inquiry-btn w-full text-center py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300 text-black font-medium transition-colors">Add to Inquiry List</button>
+                <a href="https://wa.me/919400959572?text=I%20am%20interested%20in%20product%20%23ORZ105." target="_blank" class="w-full text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">DM now</a>
             </div>
         </div>
     </main>
-
-    <div id="inquiry-list-container" class="fixed bottom-4 right-4 z-50 hidden">
-        <button id="view-inquiry-list" class="bg-white text-red-600 font-bold py-4 px-6 rounded-full shadow-lg hover:bg-gray-200 transition-colors">
-            View Inquiry List (<span id="inquiry-count">0</span>)
-        </button>
+    
+    <div id="popup-wrapper" class="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
+        <div id="popup-card" class="popup-card relative w-11/12 md:w-3/4 max-w-lg bg-orange-500 rounded-xl shadow-xl p-8 text-center text-white">
+            <button id="close-popup" class="absolute top-3 right-3 text-white text-3xl font-bold leading-none hover:text-gray-200 transition-colors">
+                &times;
+            </button>
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Special Offer!</h2>
+            <p class="text-xl md:text-2xl font-medium">Now you can save 35% in each product, order now.</p>
+        </div>
     </div>
-
-    <script>
-        /* JavaScript code goes here */
-    </script>
-</body>
+    </body>
 </html>
