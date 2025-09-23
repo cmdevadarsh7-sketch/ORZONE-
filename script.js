@@ -1,73 +1,115 @@
-// Check for local storage support
-if (typeof(Storage) !== "undefined") {
-    const inquiryButtons = document.querySelectorAll('.inquiry-btn');
-    const inquiryCountSpan = document.getElementById('inquiry-count');
-    const inquiryListContainer = document.getElementById('inquiry-list-container');
-    const viewInquiryListButton = document.getElementById('view-inquiry-list');
-    const WHATSAPP_NUMBER = '+919400959572'; // Replace with your WhatsApp number, e.g., '+919999999999'
+// Store product data for search functionality
+const products = [
+    { title: 'Product Title 1', description: 'A short, compelling description of the product goes here.', code: 'ORZ101' },
+    { title: 'Product Title 2', description: 'A short, compelling description of the product goes here.', code: 'ORZ102' },
+    { title: 'Product Title 3', description: 'A short, compelling description of the product goes here.', code: 'ORZ103' },
+    { title: 'Product Title 4', description: 'A short, compelling description of the product goes here.', code: 'ORZ104' },
+    { title: 'Product Title 5', description: 'A short, compelling description of the product goes here.', code: 'ORZ105' }
+];
 
-    // Initialize or load the inquiry list from session storage
-    let inquiryList = JSON.parse(sessionStorage.getItem('inquiryList')) || [];
-    updateInquiryCount();
-
-    // Function to update the count and visibility
-    function updateInquiryCount() {
-        inquiryCountSpan.textContent = inquiryList.length;
-        if (inquiryList.length > 0) {
-            inquiryListContainer.classList.remove('hidden');
-        } else {
-            inquiryListContainer.classList.add('hidden');
-        }
-    }
-
-    // Function to handle the WhatsApp redirect for the full list
-    function sendInquiryList() {
-        const message = `I would like to inquire about these products: ${inquiryList.join(', ')}.`;
-        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-        inquiryList = []; // Clear the list after sending
-        sessionList.removeItem('inquiryList');
-        updateInquiryCount();
-        window.location.href = whatsappUrl;
-    }
-
-    // Listen for clicks on the 'Add to Inquiry List' buttons
-    inquiryButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const productCode = e.target.dataset.code;
-            inquiryList.push(productCode);
-            sessionStorage.setItem('inquiryList', JSON.stringify(inquiryList));
-            updateInquiryCount();
-            
-            // Check if the list has reached 10 products
-            if (inquiryList.length >= 10) {
-                sendInquiryList();
-            }
-        });
-    });
-
-    // Listen for clicks on the 'View Inquiry List' button
-    viewInquiryListButton.addEventListener('click', sendInquiryList);
-    
-} else {
-    // Fallback for browsers without Web Storage support (unlikely but good practice)
-    console.error("Sorry, your browser does not support Web Storage. The inquiry list feature will not work.");
-}
 // Search functionality
 const searchInput = document.getElementById('searchInput');
+const searchResultsContainer = document.getElementById('searchResults');
 const productGrid = document.getElementById('product-grid');
 const productCards = productGrid.getElementsByClassName('product-card');
 
-searchInput.addEventListener('keyup', (e) => {
+searchInput.addEventListener('input', (e) => {
     const searchTerm = e.target.value.toLowerCase();
-    
+    searchResultsContainer.innerHTML = '';
+
+    if (searchTerm.length > 0) {
+        const filteredProducts = products.filter(product =>
+            product.title.toLowerCase().includes(searchTerm) ||
+            product.description.toLowerCase().includes(searchTerm)
+        );
+
+        if (filteredProducts.length > 0) {
+            filteredProducts.forEach(product => {
+                const suggestionDiv = document.createElement('div');
+                suggestionDiv.classList.add('search-suggestion');
+                suggestionDiv.textContent = product.title;
+                suggestionDiv.addEventListener('click', () => {
+                    searchInput.value = product.title;
+                    filterProducts(product.title);
+                    searchResultsContainer.classList.add('hidden');
+                });
+                searchResultsContainer.appendChild(suggestionDiv);
+            });
+            searchResultsContainer.classList.remove('hidden');
+        } else {
+            searchResultsContainer.classList.add('hidden');
+        }
+    } else {
+        searchResultsContainer.classList.add('hidden');
+        filterProducts('');
+    }
+});
+
+searchInput.addEventListener('keyup', (e) => {
+    filterProducts(e.target.value);
+});
+
+const filterProducts = (searchTerm) => {
     Array.from(productCards).forEach(card => {
         const title = card.querySelector('h2').textContent.toLowerCase();
         const description = card.querySelector('p').textContent.toLowerCase();
-        
-        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+
+        if (title.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase())) {
             card.style.display = 'flex';
         } else {
             card.style.display = 'none';
         }
     });
+};
+
+
+// Popup Card functionality
+const popupWrapper = document.getElementById('popup-wrapper');
+const popupCard = document.getElementById('popup-card');
+const closePopupBtn = document.getElementById('close-popup');
+
+// Show popup after a short delay for animation
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        popupWrapper.style.display = 'flex';
+        setTimeout(() => {
+            popupCard.classList.add('show');
+        }, 10);
+    }, 1000);
 });
+
+// Function to dismiss the popup
+const dismissPopup = () => {
+    popupCard.classList.remove('show');
+    popupCard.classList.add('hide');
+    setTimeout(() => {
+        popupWrapper.style.display = 'none';
+    }, 500);
+};
+
+// Close button functionality
+closePopupBtn.addEventListener('click', dismissPopup);
+
+// Swipe functionality
+let touchstartX = 0;
+let touchendX = 0;
+
+popupCard.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX;
+});
+
+popupCard.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX;
+    handleSwipeGesture();
+});
+
+function handleSwipeGesture() {
+    if (touchendX < touchstartX) {
+        // Swipe left
+        dismissPopup();
+    }
+    if (touchendX > touchstartX) {
+        // Swipe right
+        dismissPopup();
+    }
+}
