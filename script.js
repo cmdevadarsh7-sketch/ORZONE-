@@ -52,3 +52,22 @@ if (typeof(Storage) !== "undefined") {
     // Fallback for browsers without Web Storage support (unlikely but good practice)
     console.error("Sorry, your browser does not support Web Storage. The inquiry list feature will not work.");
 }
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+const productGrid = document.getElementById('product-grid');
+const productCards = productGrid.getElementsByClassName('product-card');
+
+searchInput.addEventListener('keyup', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    
+    Array.from(productCards).forEach(card => {
+        const title = card.querySelector('h2').textContent.toLowerCase();
+        const description = card.querySelector('p').textContent.toLowerCase();
+        
+        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
