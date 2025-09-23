@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>orZONE Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-primary {
+            background-color: #8B0000;
+        }
+        .btn-primary:hover {
+            background-color: #6a0000;
+        }
+        .product-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 2rem;
+        }
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .product-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container">
+        <h1 class="text-3xl font-bold mb-4">orZONE Admin Panel</h1>
+        
+        <form id="productForm">
+            <input type="text" id="productCode" placeholder="Unique Code (e.g., ORZ111)" class="form-input" required>
+            <input type="text" id="productTitle" placeholder="Product Title" class="form-input" required>
+            <input type="text" id="productPrice" placeholder="Product Price (e.g., $19.99)" class="form-input" required>
+            <textarea id="productDescription" placeholder="Product Description" class="form-input" rows="3" required></textarea>
+            <input type="url" id="productImageUrl" placeholder="Product Image URL (e.g., https://.../image.jpg)" class="form-input">
+            <button type="submit" class="btn btn-primary w-full">Add Product</button>
+        </form>
+
+        <ul id="productList" class="product-list">
+            <!-- Products will be displayed here -->
+        </ul>
+    </div>
+
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDQBPoEvprJTTkP-g6bXVFJ9aFKEH2MQpY",
+          authDomain: "orzone-database.firebaseapp.com",
+          projectId: "orzone-database",
+          storageBucket: "orzone-database.firebasestorage.app",
+          messagingSenderId: "143943786522",
+          appId: "1:143943786522:web:2a72a6eddcb455fc10f1a3"
+        };
+        
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const productsCollection = db.collection('products');
+
+        const productForm = document.getElementById('productForm');
+        const productList = document.getElementById('productList');
+
+        productForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const product = {
+                code: productCode.value.trim(),
+                title: productTitle.value.trim(),
+                price: productPrice.value.trim(),
+                description: productDescription.value.trim(),
+                imageUrl: productImageUrl.value.trim(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            await productsCollection.doc(product.code).set(product);
+            productForm.reset();
+        });
+
+        productsCollection.orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+            productList.innerHTML = '';
+            snapshot.forEach(doc => {
+                const product = doc.data();
+                const li = document.createElement('li');
+                li.className = 'product-item';
+                li.innerHTML = `
+                    <div class="flex-grow">
+                        <p class="font-bold">${product.title}</p>
+                        <p class="text-sm text-gray-500">${product.code} - ${product.price}</p>
+                    </div>
+                    <button class="btn bg-red-500 hover:bg-red-600" data-code="${product.code}">Delete</button>
+                `;
+                productList.appendChild(li);
+            });
+        });
+
+        productList.addEventListener('click', async (e) => {
+            if (e.target.tagName === 'BUTTON' && e.target.textContent === 'Delete') {
+                const productCode = e.target.dataset.code;
+                await productsCollection.doc(productCode).delete();
+            }
+        });
+
+    </script>
+</body>
+</html>
