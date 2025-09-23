@@ -4,7 +4,7 @@ if (typeof(Storage) !== "undefined") {
     const inquiryCountSpan = document.getElementById('inquiry-count');
     const inquiryListContainer = document.getElementById('inquiry-list-container');
     const viewInquiryListButton = document.getElementById('view-inquiry-list');
-    const WHATSAPP_NUMBER = ''; // Replace with your WhatsApp number, e.g., '+919999999999'
+    const WHATSAPP_NUMBER = '+919400959572'; // Replace with your WhatsApp number, e.g., '+919999999999'
 
     // Initialize or load the inquiry list from session storage
     let inquiryList = JSON.parse(sessionStorage.getItem('inquiryList')) || [];
