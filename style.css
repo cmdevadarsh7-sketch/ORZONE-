@@ -5,27 +5,6 @@ body {
     color: white;
     min-height: 100vh;
 }
-.search-results-container {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 50;
-}
-.search-suggestion {
-    padding: 0.75rem 1.25rem;
-    cursor: pointer;
-    color: black;
-    border-bottom: 1px solid #e5e7eb;
-}
-.search-suggestion:hover {
-    background-color: #f3f4f6;
-}
 .popup-card {
     transform: translateY(100%);
     transition: transform 0.5s ease-out;
