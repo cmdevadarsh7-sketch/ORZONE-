@@ -90,14 +90,23 @@
         </div>
     </main>
     
-    <div id="popup-wrapper" class="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-        <div id="popup-card" class="popup-card relative w-11/12 md:w-3/4 max-w-lg bg-orange-500 rounded-xl shadow-xl p-8 text-center text-white">
-            <button id="close-popup" class="absolute top-3 right-3 text-white text-3xl font-bold leading-none hover:text-gray-200 transition-colors">
-                &times;
-            </button>
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Special Offer!</h2>
-            <p class="text-xl md:text-2xl font-medium">Now you can save 35% in each product, order now.</p>
-        </div>
-    </div>
-    </body>
-</html>
+    // Swipe functionality
+let touchstartX = 0;
+let touchendX = 0;
+const swipeThreshold = 50; // Minimum distance in pixels for a swipe to be recognized
+
+popupWrapper.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX;
+});
+
+popupWrapper.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX;
+    handleSwipeGesture();
+});
+
+function handleSwipeGesture() {
+    const swipeDistance = touchendX - touchstartX;
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+        dismissPopup();
+    }
+}
