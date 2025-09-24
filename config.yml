@@ -1,0 +1,20 @@
+backend:
+  name: github
+  repo: cmdevadarsh7-sketch/ORZONE-
+  branch: main
+
+media_folder: "assets/images/products"
+public_folder: "/assets/images/products"
+
+collections:
+  - name: "products"
+    label: "Products"
+    folder: "_products"
+    create: true
+    slug: "{{unique_code}}"
+    fields:
+      - {label: "Unique Code", name: "unique_code", widget: "string", required: true}
+      - {label: "Product Name", name: "name", widget: "string"}
+      - {label: "Price", name: "price", widget: "number", value_type: "float", min: 0}
+      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Description", name: "description", widget: "text"}
